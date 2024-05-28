@@ -101,12 +101,12 @@
                 <p><strong>Prix :</strong> 4500 dirhams par nuit.</p>
                 <p><strong>Description :</strong> Nichée au cœur d'un jardin verdoyant, la Villa Palmiers est une oasis de calme à Agadir. Dotée de grandes baies vitrées offrant une vue imprenable sur les montagnes environnantes, cette villa moderne allie harmonieusement confort et élégance pour une expérience de séjour mémorable.</p>
             </div>
-            <button class="button" onclick="afficherConfirmation()">Réserver</button>
-            <p id="confirmation">Votre réservation est faite avec succès.</p>
+            <button class="button" onclick="redirigerVersProfile()">Réserver</button>
         </div>
     </div>
 
-
+   
+  
       
     	 
     <footer id="footer">
@@ -127,8 +127,8 @@
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
     <script>
-        function afficherConfirmation() {
-            document.getElementById("confirmation").style.display = "block";
+        function redirigerVersProfile() {
+            window.location.href = "{{ url_for('profile') }}";
         }
     </script>
 

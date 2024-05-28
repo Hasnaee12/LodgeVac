@@ -101,16 +101,12 @@
                 <p><strong>Prix :</strong> 3000 dirhams par nuit.</p> 
                 <p><strong>Description :</strong> La Villa Soleil est une luxueuse propriété située dans le quartier prisé d'Agadir. Avec ses vastes espaces extérieurs, sa piscine privée et ses intérieurs élégamment aménagés, elle offre un séjour inoubliable pour les voyageurs en quête de confort et de tranquillité.</p>
             </div>
-            <form action="{{ url_for('reservation') }}" method="post">
-                <label for="number">Nombre de nuits :</label>
-                <input type="number" id="number" class="form-control" name="number" required>
-                <button class="button" type="submit" onclick="afficherConfirmation()">Réserver</button>
-            </form>
-            <p id="confirmation">Votre réservation est faite avec succès.</p>
+            <button class="button" onclick="redirigerVersProfile()">Réserver</button>
         </div>
     </div>
 
-
+   
+  
       
     	 
     <footer id="footer">
@@ -131,11 +127,10 @@
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
     <script>
-        function afficherConfirmation() {
-            document.getElementById("confirmation").style.display = "block";
+        function redirigerVersProfile() {
+            window.location.href = "{{ url_for('profile') }}";
         }
     </script>
-
 	<script src="assets/js/modernizr-latest.js"></script> 
 	<script type='text/javascript' src='assets/js/jquery.min.js'></script>
     <script type='text/javascript' src='assets/js/fancybox/jquery.fancybox.pack.js'></script>

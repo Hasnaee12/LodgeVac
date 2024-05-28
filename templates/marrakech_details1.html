@@ -16,6 +16,25 @@
 	<link rel="stylesheet" href="assets/css/bootstrap-theme.css" media="screen"> 
 	<link rel="stylesheet" href="assets/css/style.css">
     <link rel='stylesheet' id='camera-css'  href='assets/css/camera.css' type='text/css' media='all'> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#reservationForm").submit(function(event){
+                event.preventDefault(); // Empêche la soumission normale du formulaire
+                $.ajax({
+                    url: "{{ url_for('reservation') }}",
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function(response){
+                        $("#confirmation").text(response.message).show();
+                    },
+                    error: function(xhr, status, error){
+                        $("#confirmation").text("Une erreur est survenue. Veuillez réessayer.").show();
+                    }
+                });
+            });
+        });
+    </script>
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
 	<script src="assets/js/html5shiv.js"></script>
@@ -101,8 +120,7 @@
                 <p><strong>Prix :</strong> 3000 dirhams par nuit.</p>
                 <p><strong>Description :</strong> Cette villa se trouve au cœur de la Palmeraie, offrant une oasis de calme et de luxe à quelques minutes du centre-ville animé de Marrakech. Avec ses 4 chambres spacieuses, ses jardins verdoyants, sa piscine privée et son architecture traditionnelle, c'est un véritable refuge marocain.</p>
             </div>
-            <button class="button" onclick="afficherConfirmation()">Réserver</button>
-            <p id="confirmation">Votre réservation est faite avec succès.</p>
+            <button class="button" onclick="redirigerVersProfile()">Réserver</button>
         </div>
     </div>
 
@@ -128,11 +146,10 @@
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
     <script>
-        function afficherConfirmation() {
-            document.getElementById("confirmation").style.display = "block";
+        function redirigerVersProfile() {
+            window.location.href = "{{ url_for('profile') }}";
         }
     </script>
-
 	<script src="assets/js/modernizr-latest.js"></script> 
 	<script type='text/javascript' src='assets/js/jquery.min.js'></script>
     <script type='text/javascript' src='assets/js/fancybox/jquery.fancybox.pack.js'></script>

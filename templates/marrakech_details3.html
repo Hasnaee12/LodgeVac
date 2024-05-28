@@ -101,11 +101,12 @@
                 <p><strong>Prix :</strong> 4000 dirhams par nuit.</p>
                 <p><strong>Description :</strong> Nichée le long de la pittoresque Route de l'Ourika, cette villa offre une vue imprenable sur les montagnes de l'Atlas. Dotée de vastes espaces de vie, d'un hammam traditionnel et d'un jardin exotique, contient 3 chambres, elle promet une expérience de séjour inoubliable à Marrakech.</p>
             </div>
-            <button class="button" onclick="afficherConfirmation()">Réserver</button>
-            <p id="confirmation">Votre réservation est faite avec succès.</p>
+            <button class="button" onclick="redirigerVersProfile()">Réserver</button>
         </div>
     </div>
 
+   
+  
       
     	 
     <footer id="footer">
@@ -126,11 +127,10 @@
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
     <script>
-        function afficherConfirmation() {
-            document.getElementById("confirmation").style.display = "block";
+        function redirigerVersProfile() {
+            window.location.href = "{{ url_for('profile') }}";
         }
     </script>
-
 	<script src="assets/js/modernizr-latest.js"></script> 
 	<script type='text/javascript' src='assets/js/jquery.min.js'></script>
     <script type='text/javascript' src='assets/js/fancybox/jquery.fancybox.pack.js'></script>

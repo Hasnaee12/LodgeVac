@@ -22,6 +22,20 @@
 	<script src="assets/js/html5shiv.js"></script>
 	<script src="assets/js/respond.min.js"></script>
 	<![endif]-->
+	<style>
+		.button {
+		background-color: #4CAF50;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		cursor: pointer;
+		}
+	</style>
+
 </head>
 
 <body>
@@ -86,6 +100,32 @@
 					</div>
 				</div>
 				
+				<div class="row">
+					<div class="featured-box">
+						<div class="text">
+							<h3>Your Reservations</h3>
+							<button class="button" onclick="afficherFormulaire()">Réserver</button>
+							<form id="reservationForm" action={{ url_for('reservation') }} method="post" style="display: none;">
+								<label for="nombrePersonnes">nom de masion</label>
+								<input type="text" id="nomdemaison" class="form-control" name="nomdemaison" required><br>
+								<label for="date">Date de réservation :</label>
+								<input type="date" id="date" class="form-control" name="date" required><br>
+								<label for="nombrePersonnes">Nombre de personnes :</label>
+								<input type="number" id="nombrePersonnes" class="form-control" name="nombrePersonnes" required><br>
+								<label for="nombreNuits">Nombre de nuits :</label>
+								<input type="number" id="nombreNuits" class="form-control" name="nombreNuits" required><br>
+								<button class="button" type="submit">Soumettre</button>
+							</form>
+							<p id="confirmation" style="display: none;">Votre demande est en cours de traitement.</p>
+							{% for reservation in reservations %}
+								<li><strong>vous avez réservez {{reservation.nom_maison}} pour {{reservation.number}} nuits</li>
+							{% endfor %}
+							
+						</div>
+					</div>
+				</div>
+			</div>
+				
 					<div class="row">
 						<div class="featured-box">
 							<div class="text">
@@ -117,7 +157,11 @@
 		
 	</footer>
 
-
+	<script>
+        function afficherFormulaire() {
+            document.getElementById("reservationForm").style.display = "block";
+        }
+    </script>
 
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
