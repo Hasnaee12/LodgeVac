@@ -3,93 +3,82 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors 
 import re
 from functools import wraps
+import os
 
 
 app = Flask(__name__, static_folder='assets')
+app.secret_key = 'your_secret_key'
 
 # Configuration de la base de données MySQL
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'mydb'
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', 'db')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', 'rootpassword')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'mydb')
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
-app.secret_key = 'your_secret_key'  # Définissez une clé secrète unique et sécurisée
-
-
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'loggedin' not in session:
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return decorated_function
 
 
 @app.route("/")
-@login_required
 
 def home():
 
     return render_template('index.html')
 
 @app.route("/about",methods=['GET', 'POST'])
-@login_required
 
 def about():
     return render_template('about.html')
 
 @app.route("/contact",methods=['GET', 'POST'])
-@login_required
 
 def contact():
     return render_template('contact.html')
 
 @app.route("/houses", methods=['GET', 'POST'])
-@login_required
 
 def houses():
     return render_template('houses.html')
 
 @app.route("/marrakech_details1", methods=['GET', 'POST'])
-@login_required
+
 
 def marrakech_details1():
     return render_template('marrakech_details1.html')
 
 @app.route("/marrakech_details2", methods=['GET', 'POST'])
-@login_required
+
 
 def marrakech_details2():
     return render_template('marrakech_details2.html')
 
 @app.route("/marrakech_details3", methods=['GET', 'POST'])
-@login_required
+
 
 def marrakech_details3():
     return render_template('marrakech_details3.html')
 
 @app.route("/agadir_details1", methods=['GET', 'POST'])
-@login_required
+
 
 def agadir_details1():
     return render_template('agadir_details1.html')
 
 @app.route("/agadir_details2", methods=['GET', 'POST'])
-@login_required
+
 
 def agadir_details2():
     return render_template('agadir_details2.html')
 @app.route("/agadir_details3", methods=['GET', 'POST'])
-@login_required
+
 
 def agadir_details3():
     return render_template('agadir_details3.html')
   
 
 @app.route("/reservation", methods=['POST'])
-@login_required
+
 
 def reservation():
     if 'email' not in session:
@@ -127,12 +116,12 @@ def reservation():
                 (email, nom_maison, date, nombre_personnes, nombre_nuits))
     mysql.connection.commit()
     cur.close()
-    
+    flash('Reservation successful!', 'success')
     return  'Réservation enregistrée avec succès !'
 
 
 @app.route("/login", methods=['GET', 'POST'])
-@login_required
+
 
 def login():
     mesage = ''
@@ -157,7 +146,7 @@ def login():
 
 
 @app.route("/signup", methods=['GET', 'POST'])
-@login_required
+
 def signup():
     mesage = ''
     if request.method == 'POST' and 'name' in request.form and 'password' in request.form and 'email' in request.form :
@@ -185,7 +174,7 @@ def signup():
    
 
 @app.route("/profile", methods=['GET', 'POST'])
-@login_required
+
 def profile():
     if request.method == 'POST':
         if 'loggedin' in session:
@@ -202,7 +191,7 @@ def profile():
     else:
         return redirect(url_for('login'))
 @app.route('/logout')
-@login_required
+
 def logout():
     session.pop('loggedin', None)
     session.pop('userid', None)
